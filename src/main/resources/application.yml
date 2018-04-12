@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: appengine-spring-boot
+  thymeleaf:
+    suffix: .html
+    prefix: /WEB-INF/jsp/
+  # JSON formatting options
+  jackson:
+    serialization:
+      indent_output: true
+      write-dates-as-timestamps: false
+
+# Set up security credentials...
+security:
+  user:
+    name: admin
+    password: admin
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'
+
+management:
+  # ... only for the management endpoints (actuator)
+  security:
+    enabled: true
+  # No disk space on GAE, threshold must be set to 0
+  # otherwise the default value will tell the app is DOWN
+  health:
+    diskspace:
+      threshold: 0
+
+logging:
+  level:
+    ROOT: DEBUG
