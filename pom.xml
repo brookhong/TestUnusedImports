@@ -1,177 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
-    </parent>
-
-    <groupId>com.halodu</groupId>
-    <artifactId>surfingkeys</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-
-    <properties>
-        <java.version>1.8</java.version>
-        <appengine.app.id>surfingkeys-196606</appengine.app.id>
-        <appengine.app.version>1</appengine.app.version>
-        <appengine.sdk.version>1.9.63</appengine.sdk.version>
-    </properties>
+    <groupId>helloWorld</groupId>
+    <artifactId>helloWorld</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!-- App Engine runtime -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${appengine.sdk.version}</version>
-        </dependency>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <!-- Do not embed Tomcat -->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-                <!-- Exclude JUL-to-Slf4j in order to see Spring logs in cloud console -->
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jul-to-slf4j</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-        </dependency>
-        <!-- Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.0.0-1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.3.1-1</version>
-        </dependency>
-        <!-- MISC -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
         </dependency>
-        <!-- Testing -->
+
         <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-testing</artifactId>
-            <version>${appengine.sdk.version}</version>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
         </dependency>
+
         <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-stubs</artifactId>
-            <version>${appengine.sdk.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <!-- Google App Engine (official) plugin to run local server and deploy, among others -->
-                <plugin>
-                    <groupId>com.google.appengine</groupId>
-                    <artifactId>appengine-maven-plugin</artifactId>
-                    <version>${appengine.sdk.version}</version>
-                    <configuration>
-                        <fullScanSeconds>1</fullScanSeconds>
-                        <disableUpdateCheck>true</disableUpdateCheck>
-                        <!-- <port>8181</port> -->
-                        <address>0.0.0.0</address>
-                        <jvmFlags>
-                            <!-- <jvmFlag>-Dhttps.proxyHost=dev-dsk-zghong-1a-b722d64d.cn-north-1.amazon.com</jvmFlag> -->
-                            <!-- <jvmFlag>-Dhttps.proxyPort=8123</jvmFlag> -->
-                            <!-- <jvmFlag>-DsocksProxyHost=54.37.82.19</jvmFlag> -->
-                            <!-- <jvmFlag>-DsocksProxyPort=1080</jvmFlag> -->
-                            <!-- <jvmFlag>-Dhttps.proxyHost=127.0.0.1</jvmFlag> -->
-                            <!-- <jvmFlag>-Dhttps.proxyPort=8090</jvmFlag> -->
-                            <jvmFlag>-Xdebug</jvmFlag>
-                            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=6789,server=y,suspend=n</jvmFlag>
-                        </jvmFlags>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <archiveClasses>true</archiveClasses>
-                    <webResources>
-                        <!-- in order to interpolate variables from pom.xml to appengine-web.xml -->
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>WEB-INF</targetPath>
-                        </resource>
-                    </webResources>
+                    <archive>
+                        <manifest>
+                            <mainClass>HelloLog4j</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
-            <!-- Spring Boot fat war -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.halodu.config.SecurityConfig</mainClass>
+                    <compilerArgs>
+                        <arg>-verbose</arg>
+                        <arg>-g</arg>
+                    </compilerArgs>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- App Engine plugin -->
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <id>helloWorld</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <log4j.rootLogger>INFO, file, CA</log4j.rootLogger>
+                <log4j.appender.CA>org.apache.log4j.ConsoleAppender</log4j.appender.CA>
+                <log4j.appender.CA.layout>org.apache.log4j.PatternLayout</log4j.appender.CA.layout>
+                <log4j.appender.CA.layout.ConversionPattern>%-4r [%t] %-5p %c %x-%m%n</log4j.appender.CA.layout.ConversionPattern>
+                <log4j.appender.file>org.apache.log4j.RollingFileAppender</log4j.appender.file>
+                <log4j.appender.file.maxFileSize>1024KB</log4j.appender.file.maxFileSize>
+                <log4j.appender.file.maxBackupIndex>5</log4j.appender.file.maxBackupIndex>
+                <log4j.appender.file.File>./logs/helloWorld.log</log4j.appender.file.File>
+                <log4j.appender.file.threshold>info</log4j.appender.file.threshold>
+                <log4j.appender.file.layout>org.apache.log4j.PatternLayout</log4j.appender.file.layout>
+                <log4j.appender.file.layout.ConversionPattern>%d{ABSOLUTE}%5p %c:%L - %m%n</log4j.appender.file.layout.ConversionPattern>
+                <name>value</name>
+            </properties>
+        </profile>
+    </profiles>
 </project>
